@@ -1,3 +1,7 @@
-<app-header></app-header>
-
+<div class="outer-container">
+    <app-header (action)="changeToggle($event)" [item]="carItems"></app-header>
+    <section>
+        <app-sidenav [opened]="open" (add)="addCart($event)"></app-sidenav>
+    </section>
+</div>
 <router-outlet />

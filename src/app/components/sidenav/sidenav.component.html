@@ -1,0 +1,8 @@
+<mat-sidenav-container [hasBackdrop]="true">
+    <mat-sidenav #drawer mode="over" position="end" [opened]="opened">
+        I'm a drawer
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <app-main (added)="emitAddCart($event)"></app-main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

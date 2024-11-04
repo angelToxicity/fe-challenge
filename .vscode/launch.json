@@ -16,14 +16,20 @@
     //   "preLaunchTask": "npm: test",
     //   "url": "http://localhost:9876/debug.html"
     // },
+    // {
+    //   "command": "npm start",
+    //   "name": "Run npm start",
+    //   "request": "launch",
+    //   "type": "node-terminal",
+    //   "env": {
+    //       "PATH": "C://tools//node-v20.13.1-win-x64;${env:PATH}"
+    //   }
+    // }
     {
       "command": "npm start",
       "name": "Run npm start",
       "request": "launch",
-      "type": "node-terminal",
-      "env": {
-          "PATH": "C://tools//node-v20.13.1-win-x64;${env:PATH}"
-      }
+      "type": "node-terminal"
     }
   ]
 }

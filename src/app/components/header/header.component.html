@@ -1,49 +1,93 @@
-<div class="top">
-  <div class="bar bg-header wide padding card">
-    <a href="#home" class="bar-item button">CHICKS GOLD</a>
-    <mat-divider style="z-index: 1000;" [vertical]="true"></mat-divider>
-    <div class="hide-small">
-      <button class="bar-item" mat-button [matMenuTriggerFor]="currency">CURRENCY <mat-icon>keyboard_arrow_down</mat-icon></button>
-      <button class="bar-item" mat-button [matMenuTriggerFor]="items">ITEMS <mat-icon>keyboard_arrow_down</mat-icon></button>
-      <button class="bar-item" mat-button [matMenuTriggerFor]="accounts">ACCOUNTS <mat-icon>keyboard_arrow_down</mat-icon></button>
-      <button class="bar-item" mat-button [matMenuTriggerFor]="services">SERVICES <mat-icon>keyboard_arrow_down</mat-icon></button>
-      <button class="bar-item" mat-button [matMenuTriggerFor]="swap">SWAP <mat-icon>keyboard_arrow_down</mat-icon></button>
-      <button class="bar-item" mat-button [matMenuTriggerFor]="sell">SELL <mat-icon>keyboard_arrow_down</mat-icon></button>
-      <mat-menu #currency="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
-      </mat-menu>
-      <mat-menu #items="matMenu">
-        <button mat-menu-item>Item 1</button>
-      </mat-menu>
-      <mat-menu #accounts="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
-      </mat-menu>
-      <mat-menu #services="matMenu">
-        <button mat-menu-item>Item 1</button>
-      </mat-menu>
-      <mat-menu #swap="matMenu">
-        <button mat-menu-item>Item 1</button>
-      </mat-menu>
-      <mat-menu #sell="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
-      </mat-menu>
-    </div>
-    <div class="right hide-small ">
-      <button class="bar-item" mat-button [matMenuTriggerFor]="coin">USD</button>
-      <mat-menu #coin="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
-      </mat-menu>
-    </div>
-  </div>
-</div>
 
-<header class="display-container content wide" style="max-width:1500px;" id="home">
-  <!-- <img class="image" src="/w3images/architect.jpg" alt="Architecture" width="1500" height="800"> -->
-  <div class="display-middle margin-top center">
-    <h1 class="xxlarge text-bg-header"><span class="padding black opacity-min"><b>BR</b></span> <span class="hide-small text-light-grey">Architects</span></h1>
+<header class="wide">
+  <div class="">
+    <div class="bar bg-page wide padding card height-header">
+      <a href="#home" class="bar-item button" style="border-right: 0.1rem solid white;"><img src="/img/chicks.svg" style="width:70%;"></a>
+      <div class="hide-small hide-medium">
+        <button class="bar-item" mat-button [matMenuTriggerFor]="currency">
+          <div class="container-flex-header">
+            CURRENCY 
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </button>
+        <button class="bar-item" mat-button [matMenuTriggerFor]="items">
+          <div class="container-flex-header">
+            ITEMS 
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </button>
+        <button class="bar-item" mat-button [matMenuTriggerFor]="accounts">
+          <div class="container-flex-header">
+            ACCOUNTS 
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </button>
+        <button class="bar-item" mat-button [matMenuTriggerFor]="services">
+          <div class="container-flex-header">
+            SERVICES 
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </button>
+        <button class="bar-item" mat-button [matMenuTriggerFor]="swap">
+          <div class="container-flex-header">
+            SWAP 
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </button>
+        <button class="bar-item" mat-button [matMenuTriggerFor]="sell">
+          <div class="container-flex-header">
+            SELL 
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </button>
+        <mat-menu #currency="matMenu">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
+        <mat-menu #items="matMenu">
+          <button mat-menu-item>Item 1</button>
+        </mat-menu>
+        <mat-menu #accounts="matMenu">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
+        <mat-menu #services="matMenu">
+          <button mat-menu-item>Item 1</button>
+        </mat-menu>
+        <mat-menu #swap="matMenu">
+          <button mat-menu-item>Item 1</button>
+        </mat-menu>
+        <mat-menu #sell="matMenu">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
+      </div>
+      <div class="right hide-small">
+        <button class="bar-item" mat-button [matMenuTriggerFor]="coin">
+          <div class="container-flex-header">
+            {{selectedCurrency}} 
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+        </button>
+        <mat-menu #coin="matMenu">
+          <button mat-menu-item (click)="changeCurrency('USD')">USD</button>
+          <button mat-menu-item (click)="changeCurrency('EUR')">EUR</button>
+          <button mat-menu-item (click)="changeCurrency('VES')">VES</button>
+        </mat-menu>
+        <button class="bar-item" mat-button>
+          <div class="container-flex-header">
+            <mat-icon>shopping_cart</mat-icon>
+            CART ({{item}})
+          </div>
+        </button>
+        <button class="sign-in" mat-button>
+          SIGN IN
+          <mat-icon>person</mat-icon>
+        </button>
+      </div>
+      <div class="hide-large right">
+        <button mat-button (click)="toggle()"><mat-icon [style]="'color: #fff'">menu</mat-icon></button>
+      </div>
+    </div>
   </div>
 </header>
