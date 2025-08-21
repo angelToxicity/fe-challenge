@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -11,16 +12,23 @@ import { FooterComponent } from "../footer/footer.component";
 import { BannerComponent } from "../banner/banner.component";
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { WebSocketService, InventoryItem } from '../../services/websocket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatGridListModule, MatIconModule, MatButtonModule, MatBadgeModule, FooterComponent, BannerComponent, FormsModule, MatAutocompleteModule],
+  imports: [CommonModule, MatCardModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatGridListModule, MatIconModule, MatButtonModule, MatBadgeModule, FooterComponent, BannerComponent, FormsModule, MatAutocompleteModule],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
-export class MainComponent {
+export class MainComponent implements OnInit, OnDestroy {
   @Output() added = new EventEmitter<number>()
+  
+  private inventorySubscription?: Subscription;
+  realTimeInventory: InventoryItem[] = [];
+  
+  constructor(private webSocketService: WebSocketService) {}
   cards = [
     {
       name: "Chrome",
@@ -290,6 +298,36 @@ export class MainComponent {
     this.data_alter = [...this.cards]
     this.data_paginate = this.data_alter.filter((e, i) => i < this.showCont).map((element) => element)
     this.calculatePaginator(this.data_alter.length)
+    
+    // Subscribe to real-time inventory updates
+    this.inventorySubscription = this.webSocketService.getInventoryUpdates().subscribe(
+      (inventory: InventoryItem[]) => {
+        this.realTimeInventory = inventory;
+        console.log('Received inventory update:', inventory);
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.inventorySubscription) {
+      this.inventorySubscription.unsubscribe();
+    }
+  }
+
+  // Method to check if an item is in stock based on real-time data
+  isItemInStock(itemName: string): boolean {
+    const inventoryItem = this.realTimeInventory.find(item => 
+      item.name.toLowerCase() === itemName.toLowerCase()
+    );
+    return inventoryItem ? inventoryItem.inStock : true; // Default to true if not found
+  }
+
+  // Method to get real-time quantity for an item
+  getItemQuantity(itemName: string): number {
+    const inventoryItem = this.realTimeInventory.find(item => 
+      item.name.toLowerCase() === itemName.toLowerCase()
+    );
+    return inventoryItem ? inventoryItem.quantity : 0;
   }
 
   calculatePaginator(array_length:number) {
